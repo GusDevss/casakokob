@@ -215,6 +215,7 @@
   var toggle = document.querySelector('.menu-toggle');
   var barra = document.querySelector('.barra-movil');
   var waFlotante = document.querySelector('.wa-float');
+  var subir = document.querySelector('.subir');
   var hero = document.getElementById('inicio');
 
   function menuAbierto() { return root.classList.contains('menu-abierto'); }
@@ -242,6 +243,7 @@
     if (y < ultimoY - 4 || !pasoHero) header.classList.remove('oculto');
     if (barra) barra.classList.toggle('visible', y > hero.offsetHeight * 0.6);
     if (waFlotante) waFlotante.classList.toggle('visible', y > hero.offsetHeight * 0.6);
+    if (subir) subir.classList.toggle('visible', y > hero.offsetHeight);
     ultimoY = y;
   }
   window.addEventListener('scroll', alHacerScroll, { passive: true });
