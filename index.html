@@ -13,10 +13,10 @@
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@1,400;1,500&family=Alegreya+Sans:wght@400;500;700;800&family=Zilla+Slab:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
   <link rel="preload" as="image" href="assets/img/acceso.webp" media="(min-width: 700px)">
   <link rel="preload" as="image" href="assets/img/acceso-movil.webp" media="(max-width: 699px)">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610212229">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610212240">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -73,7 +73,7 @@
           <a class="header-wa" data-wa="Hola, me interesa Casa Kokob. ¿Qué lotes tienen disponibles?" href="https://wa.me/524425856551" target="_blank" rel="noopener" aria-label="WhatsApp 442 585 6551">
             <svg class="ico"><use href="#i-wa"/></svg>
           </a>
-          <a class="btn btn-oro header-cta" href="#cotizador">Aparta tu lote<svg class="ico"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-piedra header-cta" href="#cotizador">Aparta tu lote</a>
           <button class="menu-toggle" type="button" aria-controls="menu-movil" aria-expanded="false" aria-label="Abrir menú">
             <span></span><span></span>
           </button>
@@ -101,37 +101,50 @@
 
   <main id="contenido">
     <!-- Portada -->
-    <section class="hero" id="inicio">
-      <div class="hero-media" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 699px)" srcset="assets/img/acceso-movil.webp">
-          <img src="assets/img/acceso.webp" alt="" width="1920" height="1080" fetchpriority="high">
-        </picture>
+    <section class="hero" id="inicio" aria-label="Casa Kokob">
+      <div class="hero-slides" aria-hidden="true">
+        <figure class="hero-slide activo" data-titulo="Acceso con caseta de vigilancia 24/7"><picture><source media="(max-width: 699px)" srcset="assets/img/acceso-movil.webp"><img src="assets/img/acceso.webp" alt="" width="1920" height="1080" fetchpriority="high"></picture></figure>
+        <figure class="hero-slide" data-titulo="Albercas “El Sisal”"><img src="assets/img/alberca-sisal.webp" alt="" loading="lazy"></figure>
+        <figure class="hero-slide" data-titulo="Zona de hamacas “La Siesta”"><img src="assets/img/la-siesta.webp" alt="" loading="lazy"></figure>
+        <figure class="hero-slide" data-titulo="Bar “El Fresco”"><img src="assets/img/bar-el-fresco.webp" alt="" loading="lazy"></figure>
+        <figure class="hero-slide" data-titulo="Lotes delimitados y áreas verdes"><img src="assets/img/vista-aerea.webp" alt="" loading="lazy"></figure>
       </div>
+      <div class="hero-velo" aria-hidden="true"></div>
+
       <div class="wrap hero-inner">
-        <p class="eyebrow hero-anim">Privada residencial · Tixkokob, Yucatán</p>
-        <h1 class="hero-title">
-          <span class="line"><span>Tu terreno en</span></span>
-          <span class="line"><span><em>tierra de riqueza</em></span></span>
-        </h1>
-        <p class="hero-lead hero-anim">Lotes residenciales desde <strong>160 m²</strong>, listos para construir, a 35 minutos de Mérida y a 15 de la estación del Tren Maya.</p>
-        <div class="hero-price hero-anim">
-          <span>Mensualidades desde</span>
-          <strong>$2,856</strong>
-          <span>· financiamiento propio hasta 60 meses</span>
+        <div class="hero-copy">
+          <p class="hero-lugar hero-anim">Privada residencial en Tixkokob, Yucatán</p>
+          <h1 class="hero-title">
+            <span class="line"><span>Tu terreno en</span></span>
+            <span class="line"><span>tierra de riqueza</span></span>
+          </h1>
+          <p class="hero-lead hero-anim">Lotes listos para construir a 35 minutos de Mérida y a 15 de la estación del Tren Maya, con financiamiento propio.</p>
+          <dl class="hero-cifras hero-anim">
+            <div><dt>Lotes desde</dt><dd>$136,000</dd></div>
+            <div><dt>Mensualidades desde</dt><dd>$2,856</dd></div>
+            <div><dt>Plazo</dt><dd>Hasta 60 meses</dd></div>
+          </dl>
+          <div class="hero-ctas hero-anim">
+            <a class="btn btn-piedra btn-lg" href="#cotizador">Cotiza tu lote</a>
+            <a class="btn btn-wa btn-lg" data-wa="Hola, quiero apartar un lote en Casa Kokob. ¿Me compartes disponibilidad?" href="https://wa.me/524425856551" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Apartar por WhatsApp</a>
+          </div>
         </div>
-        <div class="hero-ctas hero-anim">
-          <a class="btn btn-oro btn-lg" href="#cotizador"><svg class="ico"><use href="#i-calc"/></svg>Cotiza tu lote</a>
-          <a class="btn btn-wa btn-lg" data-wa="Hola, quiero apartar un lote en Casa Kokob. ¿Me compartes disponibilidad?" href="https://wa.me/524425856551" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Apartar por WhatsApp</a>
+
+        <div class="hero-galeria hero-anim">
+          <p class="hero-caption" aria-live="polite"><span class="hero-contador"><b id="slide-num">1</b> de 5</span><span id="slide-titulo">Acceso con caseta de vigilancia 24/7</span></p>
+          <div class="hero-thumbs">
+            <button class="hero-thumb activo" type="button" aria-label="Ver: Acceso con caseta de vigilancia 24/7"><img src="assets/img/mini-acceso.webp" alt="" width="240" height="150"><span class="hero-thumb-barra"><i></i></span></button>
+            <button class="hero-thumb" type="button" aria-label="Ver: Albercas “El Sisal”"><img src="assets/img/mini-alberca-sisal.webp" alt="" width="240" height="150"><span class="hero-thumb-barra"><i></i></span></button>
+            <button class="hero-thumb" type="button" aria-label="Ver: Zona de hamacas “La Siesta”"><img src="assets/img/mini-la-siesta.webp" alt="" width="240" height="150"><span class="hero-thumb-barra"><i></i></span></button>
+            <button class="hero-thumb" type="button" aria-label="Ver: Bar “El Fresco”"><img src="assets/img/mini-bar-el-fresco.webp" alt="" width="240" height="150"><span class="hero-thumb-barra"><i></i></span></button>
+            <button class="hero-thumb" type="button" aria-label="Ver: Lotes delimitados y áreas verdes"><img src="assets/img/mini-vista-aerea.webp" alt="" width="240" height="150"><span class="hero-thumb-barra"><i></i></span></button>
+          </div>
+          <div class="hero-flechas">
+            <button type="button" class="hero-prev" aria-label="Imagen anterior"><svg class="ico"><use href="#i-arrow"/></svg></button>
+            <button type="button" class="hero-next" aria-label="Imagen siguiente"><svg class="ico"><use href="#i-arrow"/></svg></button>
+          </div>
         </div>
-        <ul class="hero-stats hero-anim">
-          <li><strong data-count="160">160</strong><span>m² desde</span></li>
-          <li><strong data-count="60">60</strong><span>meses para pagar</span></li>
-          <li><strong>$<span data-count="3000" data-sep>3,000</span></strong><span>para apartar</span></li>
-          <li><strong>24/7</strong><span>seguridad</span></li>
-        </ul>
       </div>
-      <a class="scroll-cue" href="#manifiesto" aria-label="Seguir bajando"><span></span></a>
     </section>
 
     <!-- Franja en movimiento -->
@@ -417,6 +430,6 @@
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/main.js?v=202610212229" defer></script>
+  <script src="assets/js/main.js?v=202610212240" defer></script>
 </body>
 </html>

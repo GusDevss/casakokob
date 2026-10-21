@@ -214,6 +214,7 @@
   var menuMovil = document.getElementById('menu-movil');
   var toggle = document.querySelector('.menu-toggle');
   var barra = document.querySelector('.barra-movil');
+  var waFlotante = document.querySelector('.wa-float');
   var hero = document.getElementById('inicio');
 
   function menuAbierto() { return root.classList.contains('menu-abierto'); }
@@ -240,6 +241,7 @@
     if (pasoHero && y > ultimoY + 4 && !menuAbierto()) header.classList.add('oculto');
     if (y < ultimoY - 4 || !pasoHero) header.classList.remove('oculto');
     if (barra) barra.classList.toggle('visible', y > hero.offsetHeight * 0.6);
+    if (waFlotante) waFlotante.classList.toggle('visible', y > hero.offsetHeight * 0.6);
     ultimoY = y;
   }
   window.addEventListener('scroll', alHacerScroll, { passive: true });
@@ -276,6 +278,43 @@
     video.addEventListener('ended', function () { marco.classList.remove('reproduciendo'); });
   }
 
+  // ---------- Galería de la portada ----------
+  var heroEl = document.getElementById('inicio');
+  var slides = heroEl.querySelectorAll('.hero-slide');
+  var thumbs = heroEl.querySelectorAll('.hero-thumb');
+  var DURACION = 6000;
+  var actual = 0, temporizador = null;
+  var autoplay = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  heroEl.style.setProperty('--dur', DURACION / 1000 + 's');
+
+  function mostrar(i) {
+    actual = (i + slides.length) % slides.length;
+    slides.forEach(function (sl, j) {
+      var img = sl.querySelector('img');
+      if (j === actual && img.loading === 'lazy') img.loading = 'eager';
+      sl.classList.toggle('activo', j === actual);
+    });
+    thumbs.forEach(function (t, j) {
+      t.classList.remove('activo');
+      if (j === actual) { void t.offsetWidth; t.classList.add('activo'); }
+    });
+    document.getElementById('slide-num').textContent = actual + 1;
+    document.getElementById('slide-titulo').textContent = slides[actual].getAttribute('data-titulo');
+    programar();
+  }
+  function programar() {
+    clearTimeout(temporizador);
+    if (autoplay && !document.hidden) temporizador = setTimeout(function () { mostrar(actual + 1); }, DURACION);
+  }
+  thumbs.forEach(function (t, j) { t.addEventListener('click', function () { mostrar(j); }); });
+  heroEl.querySelector('.hero-prev').addEventListener('click', function () { mostrar(actual - 1); });
+  heroEl.querySelector('.hero-next').addEventListener('click', function () { mostrar(actual + 1); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) clearTimeout(temporizador); else mostrar(actual); });
+  // Precarga la siguiente imagen cuando la página ya cargó
+  window.addEventListener('load', function () { slides.forEach(function (sl) { sl.querySelector('img').loading = 'eager'; }); });
+  if (!autoplay) heroEl.classList.add('pausado');
+  programar();
+
   // ---------- Animaciones ----------
   var sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!window.gsap || !window.ScrollTrigger || sinMovimiento) {
@@ -303,14 +342,11 @@
 
   // Portada
   var intro = gsap.timeline({ defaults: { ease: 'expo.out' } });
-  intro.from('.hero-media img', { scale: 1.2, duration: 2.6, ease: 'power3.out' })
-    .from('.hero-title .line > span', { yPercent: 110, duration: 1.3, stagger: 0.12 }, 0.2)
-    .from('.hero-anim', { y: 30, opacity: 0, duration: 1.1, stagger: 0.1 }, 0.45)
-    .from('.header-bar', { y: -20, opacity: 0, duration: 1.2, clearProps: 'transform' }, 0.5)
-    .fromTo('.topbar', { opacity: 0 }, { opacity: 1, duration: 1, clearProps: 'opacity' }, 0.5);
+  intro.from('.hero-title .line > span', { yPercent: 110, duration: 1.4, stagger: 0.12 }, 0.2)
+    .from('.hero-anim', { y: 26, opacity: 0, duration: 1.2, stagger: 0.1, clearProps: 'transform,opacity' }, 0.5);
 
-  gsap.to('.hero-media', { yPercent: 18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.hero-inner', { y: -60, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero-slides', { yPercent: 14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero-inner', { y: -50, opacity: 0.3, ease: 'none', scrollTrigger: { trigger: '.hero', start: '35% top', end: 'bottom top', scrub: true } });
 
   // Contadores
   document.querySelectorAll('[data-count]').forEach(function (el) {
