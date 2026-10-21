@@ -1,0 +1,42 @@
+# Casa Kokob: HTTPS, dominio sin www, compresión y caché
+
+RewriteEngine On
+
+# Siempre por HTTPS y sin "www"
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://casakokob.com%{REQUEST_URI} [L,R=301]
+
+# /index.html se sirve como la raíz para no duplicar la página
+RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+RewriteRule ^index\.html$ / [L,R=301]
+
+# La configuración del correo y la librería no se abren desde el navegador
+<FilesMatch "^config-correo.*\.php$">
+  Require all denied
+</FilesMatch>
+RewriteRule ^lib/ - [F,L]
+
+Options -Indexes
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml application/xml text/xml text/plain
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
+  # CSS y JS llevan ?v= en su dirección, así que pueden guardarse un año
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType video/mp4 "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

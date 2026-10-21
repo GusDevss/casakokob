@@ -186,7 +186,7 @@ html.menu-abierto, .menu-abierto body { overflow: hidden; }
 }
 .hero-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 48px; }
 .hero-copy { max-width: 820px; }
-.hero-lugar { margin: 0 0 22px; font-size: 1rem; color: var(--piedra); letter-spacing: .01em; }
+.hero-lugar { display: block; margin: 0 0 22px; font-family: var(--f-texto); font-weight: 400; font-size: 1rem; line-height: 1.5; letter-spacing: .01em; color: var(--piedra); }
 .hero-title {
   margin-bottom: 26px; color: var(--hueso);
   font-family: var(--f-display); font-weight: 300; font-size: clamp(3rem, 6vw, 5.4rem);
@@ -379,6 +379,20 @@ legend span { display: grid; place-items: center; width: 30px; height: 30px; bor
 .paso p { font-size: 1rem; color: var(--texto-suave); }
 .proceso-cta { margin-top: 40px; text-align: center; }
 
+/* Preguntas frecuentes */
+.faq { padding: clamp(80px, 12vw, 140px) 0; background: var(--crema-2); }
+.faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(32px, 6vw, 90px); align-items: start; }
+.faq-head { position: sticky; top: calc(var(--header-h) + 24px); }
+.faq-head p { color: var(--texto-suave); margin-bottom: 26px; }
+.pregunta { border-bottom: 1px solid var(--linea); }
+.pregunta:first-child { border-top: 1px solid var(--linea); }
+.pregunta summary { position: relative; padding: 22px 48px 22px 0; cursor: pointer; list-style: none; font-family: var(--f-display); font-size: 1.3rem; font-weight: 500; letter-spacing: -.01em; color: var(--terracota-osc); }
+.pregunta summary::-webkit-details-marker { display: none; }
+.pregunta summary::before, .pregunta summary::after { content: ""; position: absolute; right: 8px; top: 50%; width: 16px; height: 1.5px; background: var(--terracota); transition: transform .35s var(--ease); }
+.pregunta summary::after { transform: rotate(90deg); }
+.pregunta[open] summary::after { transform: rotate(0deg); }
+.pregunta p { margin: 0; padding: 0 48px 24px 0; color: var(--texto-suave); max-width: 60ch; }
+
 /* Contacto */
 .contacto { padding: clamp(80px, 12vw, 140px) 0; background: var(--terracota-osc) url("../img/textura-terracota.webp") center / cover; color: var(--arena); }
 .contacto-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 90px); align-items: center; }
@@ -489,7 +503,9 @@ legend span { display: grid; place-items: center; width: 30px; height: 30px; bor
   .hero-thumb { aspect-ratio: auto; height: 16px; border-radius: 0; }
   .hero-thumb img { display: none; }
   .hero-thumb-barra { left: 0; right: 0; bottom: 7px; opacity: 1; }
-  .ubicacion-grid, .inversion-grid, .contacto-grid { grid-template-columns: 1fr; }
+  .ubicacion-grid, .inversion-grid, .contacto-grid, .faq-grid { grid-template-columns: 1fr; }
+  .faq-head { position: static; }
+  .pregunta summary { font-size: 1.15rem; }
   .ubicacion-mapa { max-width: 480px; }
   .proyecto { padding-top: 46vw; }
   .proyecto-card { margin-inline: -4px; }

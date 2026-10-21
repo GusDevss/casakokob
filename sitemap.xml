@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://casakokob.com/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://casakokob.com/assets/img/acceso.webp</image:loc></image:image>
+    <image:image><image:loc>https://casakokob.com/assets/img/alberca-sisal.webp</image:loc></image:image>
+    <image:image><image:loc>https://casakokob.com/assets/img/vista-aerea.webp</image:loc></image:image>
+    <image:image><image:loc>https://casakokob.com/assets/img/la-siesta.webp</image:loc></image:image>
+    <image:image><image:loc>https://casakokob.com/assets/img/bar-el-fresco.webp</image:loc></image:image>
+    <image:image><image:loc>https://casakokob.com/assets/img/mapa.webp</image:loc></image:image>
+  </url>
+</urlset>
