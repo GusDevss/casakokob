@@ -211,36 +211,51 @@
 
   // ---------- Menú, encabezado y barra móvil ----------
   var header = document.getElementById('header');
-  var menu = document.getElementById('menu');
+  var menuMovil = document.getElementById('menu-movil');
   var toggle = document.querySelector('.menu-toggle');
   var barra = document.querySelector('.barra-movil');
   var hero = document.getElementById('inicio');
 
-  function cerrarMenu() {
-    menu.classList.remove('abierto');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.querySelector('use').setAttribute('href', '#i-menu');
+  function menuAbierto() { return root.classList.contains('menu-abierto'); }
+  function abrirMenu(abrir) {
+    if (abrir) menuMovil.hidden = false;
+    // Un cuadro de espera para que la transición arranque después de quitar "hidden"
+    requestAnimationFrame(function () {
+      root.classList.toggle('menu-abierto', abrir);
+      if (window.__lenis) window.__lenis[abrir ? 'stop' : 'start']();
+    });
+    toggle.setAttribute('aria-expanded', String(abrir));
+    toggle.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+    if (!abrir) setTimeout(function () { if (!menuAbierto()) menuMovil.hidden = true; }, 700);
   }
-  toggle.addEventListener('click', function () {
-    var abierto = menu.classList.toggle('abierto');
-    toggle.setAttribute('aria-expanded', String(abierto));
-    toggle.querySelector('use').setAttribute('href', abierto ? '#i-close' : '#i-menu');
-    if (abierto) header.classList.add('solid');
-  });
-  menu.addEventListener('click', function (e) { if (e.target.closest('a')) cerrarMenu(); });
+  toggle.addEventListener('click', function () { abrirMenu(!menuAbierto()); });
+  menuMovil.addEventListener('click', function (e) { if (e.target.closest('a')) abrirMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menuAbierto()) abrirMenu(false); });
 
   var ultimoY = 0;
   function alHacerScroll() {
     var y = window.scrollY;
     var pasoHero = y > hero.offsetHeight - 120;
-    header.classList.toggle('solid', y > 40 || menu.classList.contains('abierto'));
-    header.classList.toggle('oculto', pasoHero && y > ultimoY + 4 && !menu.classList.contains('abierto'));
+    header.classList.toggle('compacto', y > 40);
+    if (pasoHero && y > ultimoY + 4 && !menuAbierto()) header.classList.add('oculto');
     if (y < ultimoY - 4 || !pasoHero) header.classList.remove('oculto');
     if (barra) barra.classList.toggle('visible', y > hero.offsetHeight * 0.6);
     ultimoY = y;
   }
   window.addEventListener('scroll', alHacerScroll, { passive: true });
   alHacerScroll();
+
+  // Marca en el menú la sección que se está viendo
+  var enlacesNav = document.querySelectorAll('.main-nav a');
+  if ('IntersectionObserver' in window) {
+    var observador = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        enlacesNav.forEach(function (a) { a.classList.toggle('activo', a.getAttribute('href') === '#' + en.target.id); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (sec) { observador.observe(sec); });
+  }
 
   var waFloat = document.querySelector('.wa-float');
   setTimeout(function () {
@@ -271,7 +286,7 @@
 
   // Scroll suave
   if (window.Lenis) {
-    var lenis = new Lenis({ lerp: 0.1 });
+    var lenis = window.__lenis = new Lenis({ lerp: 0.1 });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
@@ -280,7 +295,8 @@
         var destino = document.querySelector(a.getAttribute('href'));
         if (!destino) return;
         e.preventDefault();
-        lenis.scrollTo(destino, { offset: a.getAttribute('href') === '#inicio' ? 0 : -header.offsetHeight + 1, duration: 1.4 });
+        lenis.start();
+        lenis.scrollTo(destino, { offset: a.getAttribute('href') === '#inicio' ? 0 : -80, duration: 1.4, force: true });
       });
     });
   }
@@ -290,7 +306,8 @@
   intro.from('.hero-media img', { scale: 1.2, duration: 2.6, ease: 'power3.out' })
     .from('.hero-title .line > span', { yPercent: 110, duration: 1.3, stagger: 0.12 }, 0.2)
     .from('.hero-anim', { y: 30, opacity: 0, duration: 1.1, stagger: 0.1 }, 0.45)
-    .from('.header-inner', { opacity: 0, duration: 1 }, 0.6);
+    .from('.header-bar', { y: -20, opacity: 0, duration: 1.2, clearProps: 'transform' }, 0.5)
+    .fromTo('.topbar', { opacity: 0 }, { opacity: 1, duration: 1, clearProps: 'opacity' }, 0.5);
 
   gsap.to('.hero-media', { yPercent: 18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.hero-inner', { y: -60, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: true } });
