@@ -41,6 +41,23 @@
 
   document.querySelectorAll('[data-wa]').forEach(function (a) { a.href = waUrl(a.getAttribute('data-wa')); });
 
+  // ---------- Conversiones de Google Ads ----------
+  // Etiqueta de cada acción de conversión (la parte después de la diagonal en 'send_to').
+  // Mientras una esté vacía, esa acción no se envía.
+  var GOOGLE_ADS = 'AW-17298114605';
+  var CONVERSIONES = { whatsapp: '', formulario: '', llamada: '' };
+
+  function registrarConversion(tipo) {
+    if (typeof window.gtag !== 'function' || !CONVERSIONES[tipo]) return;
+    gtag('event', 'conversion', { send_to: GOOGLE_ADS + '/' + CONVERSIONES[tipo] });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    if (a.href.indexOf('https://wa.me/') === 0) registrarConversion('whatsapp');
+    else if (a.href.indexOf('tel:') === 0) registrarConversion('llamada');
+  });
+
   // ---------- Cotizador ----------
   var cotLotes = document.getElementById('cot-lotes');
   var cotPlanes = document.getElementById('cot-planes');
@@ -192,6 +209,7 @@
         .then(function (res) { return res.json().catch(function () { return { ok: false }; }); })
         .then(function (data) {
           if (!data.ok) throw new Error(data.error || 'Error');
+          registrarConversion('formulario');
           form.reset();
           status.className = 'form-status ok';
           status.innerHTML = '¡Gracias! Un asesor te contactará muy pronto. Si quieres apartar ya, <a href="' +
