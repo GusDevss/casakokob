@@ -94,7 +94,7 @@ p { margin: 0 0 1em; }
 .topbar-promo { display: flex; align-items: center; gap: 10px; margin: 0; letter-spacing: .02em; }
 .topbar-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 0 0 rgba(31,174,91,.6); animation: punto 2s infinite; }
 @keyframes punto { 70% { box-shadow: 0 0 0 8px rgba(31,174,91,0); } 100% { box-shadow: 0 0 0 0 rgba(31,174,91,0); } }
-.topbar-links { display: flex; gap: 22px; }
+.topbar-links { display: flex; align-items: center; gap: 22px; }
 .topbar-links a { display: inline-flex; align-items: center; gap: 7px; text-decoration: none; transition: color .2s; }
 .topbar-links a:hover { color: var(--oro); }
 .topbar-links .ico { width: 15px; height: 15px; color: var(--oro); }
@@ -428,6 +428,19 @@ legend span { display: grid; place-items: center; width: 30px; height: 30px; bor
 .footer-inner > img { width: 130px; }
 .footer-info p { margin: 0; }
 .footer a { color: var(--arena); }
+.footer-redes { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; }
+.footer-redes p { margin: 0; }
+.redes { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.redes a { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(233,220,196,.28); color: var(--arena); transition: background-color .25s, color .25s, border-color .25s, transform .35s var(--ease); }
+.redes a:hover { background: var(--arena); border-color: var(--arena); color: var(--tinta); transform: translateY(-2px); }
+.redes .ico { width: 19px; height: 19px; }
+.redes-centro { justify-content: center; margin-top: 18px; }
+.contacto-redes { margin-top: 34px; padding-top: 24px; border-top: 1px solid rgba(233,220,196,.18); }
+.contacto-redes p { margin: 0 0 12px; font-size: .98rem; }
+.redes-topbar { gap: 4px; margin-left: 4px; padding-left: 18px; border-left: 1px solid rgba(233,220,196,.2); }
+.redes-topbar a { width: 28px; height: 28px; border: 0; }
+.redes-topbar a:hover { background: rgba(233,220,196,.15); color: var(--oro); transform: none; }
+.redes-topbar .ico { width: 15px; height: 15px; }
 .footer-legal { grid-column: 1 / -1; margin: 16px 0 0; padding-top: 20px; border-top: 1px solid rgba(233,220,196,.12); font-size: .88rem; }
 
 /* WhatsApp flotante */
