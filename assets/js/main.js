@@ -45,7 +45,7 @@
   // Etiqueta de cada acción de conversión (la parte después de la diagonal en 'send_to').
   // Mientras una esté vacía, esa acción no se envía.
   var GOOGLE_ADS = 'AW-17298114605';
-  var CONVERSIONES = { whatsapp: '', formulario: 'e-hICNWijKcdEK2QsbhA', llamada: '' };
+  var CONVERSIONES = { whatsapp: 'YgBYCNbwgKodEK2QsbhA', formulario: 'e-hICNWijKcdEK2QsbhA', llamada: 'j5wQCNnwgKodEK2QsbhA' };
 
   function registrarConversion(tipo) {
     if (typeof window.gtag !== 'function' || !CONVERSIONES[tipo]) return;
