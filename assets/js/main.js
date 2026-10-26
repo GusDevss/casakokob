@@ -45,7 +45,7 @@
   // Etiqueta de cada acción de conversión (la parte después de la diagonal en 'send_to').
   // Mientras una esté vacía, esa acción no se envía.
   var GOOGLE_ADS = 'AW-17298114605';
-  var CONVERSIONES = { whatsapp: '', formulario: '', llamada: '' };
+  var CONVERSIONES = { whatsapp: '', formulario: 'e-hICNWijKcdEK2QsbhA', llamada: '' };
 
   function registrarConversion(tipo) {
     if (typeof window.gtag !== 'function' || !CONVERSIONES[tipo]) return;
@@ -209,6 +209,14 @@
         .then(function (res) { return res.json().catch(function () { return { ok: false }; }); })
         .then(function (data) {
           if (!data.ok) throw new Error(data.error || 'Error');
+          // Conversiones avanzadas: Google recibe el correo y el teléfono cifrados para atribuir mejor
+          if (typeof window.gtag === 'function') {
+            var tel = form.elements.telefono.value.replace(/\D+/g, '');
+            gtag('set', 'user_data', {
+              email: form.elements.email.value.trim().toLowerCase(),
+              phone_number: tel.length === 10 ? '+52' + tel : (tel ? '+' + tel : undefined)
+            });
+          }
           registrarConversion('formulario');
           form.reset();
           status.className = 'form-status ok';
